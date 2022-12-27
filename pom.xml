@@ -81,12 +81,7 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>cat-drools</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+
 			<repositories>
 				<repository>
 					<id>central</id>
@@ -113,8 +108,6 @@
 					</snapshots>
 				</repository>
 			</repositories>
-		</profile>
-	</profiles>
 
 	<distributionManagement>
 		<repository>
