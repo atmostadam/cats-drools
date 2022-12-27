@@ -32,11 +32,21 @@ jobs:
       with:
         servers: |
           [
-            {"id": "github", "username": "${{ secrets.CATS_USERNAME }}", "password": "${{ secrets.CATS_PASSWORD }}"},
-            {"id": "cats-drools", "username": "${{ secrets.CATS_USERNAME }}", "password": "${{ secrets.CATS_PASSWORD }}"},
-            {"id": "cats-api", "username": "${{ secrets.CATS_USERNAME }}", "password": "${{ secrets.CATS_PASSWORD }}"}, 
-            {"id": "cats-test", "username": "${{ secrets.CATS_USERNAME }}", "password": "${{ secrets.CATS_PASSWORD }}"}, 
-            {"id": "cats-spring-boot", "username": "${{ secrets.CATS_USERNAME }}", "password": "${{ secrets.CATS_PASSWORD }}"}
+            {
+              "id": "cats-drools",
+              "username": "${{ secrets.CATS_USERNAME }}",
+              "password": "${{ secrets.CATS_PASSWORD }}"
+            },
+            {
+              "id": "cats-api",
+              "username": "${{ secrets.CATS_USERNAME }}",
+              "password": "${{ secrets.CATS_PASSWORD }}"
+            }, 
+            {
+              "id": "cats-test",
+              "username": "${{ secrets.CATS_USERNAME }}",
+              "password": "${{ secrets.CATS_PASSWORD }}"
+            }
           ]
 
     - name: Build with Maven

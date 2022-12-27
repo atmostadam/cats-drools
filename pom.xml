@@ -83,7 +83,7 @@
 
 	<profiles>
 		<profile>
-			<id>github</id>
+			<id>cat-drools</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
