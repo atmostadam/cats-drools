@@ -1,0 +1,27 @@
+package com.atmostadam.cats.drools
+
+import com.atmostadam.cats.api.model.in.CatRequest;
+import com.atmostadam.cats.api.model.out.CatResponse;
+
+dialect "java"
+
+rule "Create Test Cat Request"
+agenda-group "cat-request-rules"
+no-loop
+    when
+    	$request : CatRequest()
+    then
+        $request.setMicrochipNumber(1000000000011L);
+		update($request);
+end
+
+
+rule "Create Test Cat Response"
+agenda-group "cat-response-rules"
+no-loop
+    when
+    	$response : CatResponse()
+    then
+        $response.setMessage("200");
+		update($response);
+end
