@@ -19,6 +19,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<revision>0.0.10</revision>
+		<kie.version>7.73.0.Final</kie.version>
 		<jacoco.version>0.8.8</jacoco.version>
 	</properties>
 
@@ -27,6 +28,11 @@
 			<groupId>com.atmostadam.cats</groupId>
 			<artifactId>cats-api</artifactId>
 			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.kie.server</groupId>
+			<artifactId>kie-server-api</artifactId>
+			<version>${kie.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
