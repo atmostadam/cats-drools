@@ -1,0 +1,24 @@
+package com.atmostadam.cats.drools
+
+import com.atmostadam.cats.api.model.in.CatRequest;
+
+import com.atmostadam.cats.framework.model.adoptapet.AdoptAPetRequest;
+import com.atmostadam.cats.framework.model.adoptapet.LimitedPetDetails;
+import com.atmostadam.cats.framework.model.adoptapet.LimitedPetImage;
+
+dialect "java"
+
+rule "Create Post Adopt-a-Pet Limited Pet Image"
+agenda-group "adopt-a-pet-rules"
+no-loop
+    when
+    	$image : LimitedPetImage(thumbnail_url == null)
+    then
+        $image.thumbnail_url("atmostadam.com")
+              .thumbnail_width(null)
+              .thumbnail_height(null)
+              .original_url(null)
+              .original_width(null)
+              .original_height(null);
+		insert($image);
+end

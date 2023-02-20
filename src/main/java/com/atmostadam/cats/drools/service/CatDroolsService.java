@@ -2,6 +2,7 @@ package com.atmostadam.cats.drools.service;
 
 import com.atmostadam.cats.api.exception.CatException;
 import com.atmostadam.cats.drools.listener.CatAgendaEventListener;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.io.Resource;
@@ -55,7 +56,8 @@ public class CatDroolsService {
             kieSession.getAgenda().getAgendaGroup(agendaGroup).setFocus();
         } catch (Exception e) {
             logger.info("Unable to set agenda group [{}] with error message [{}]", agendaGroup, e.getMessage(), e);
-            throw new CatException("Unable to set agenda group: " + agendaGroup, e);
+            throw new CatException(String.format("Exception thrown [%s] with message [%s] because unable to set agenda group [%s]",
+                    e.getClass().getSimpleName(), e.getMessage(), agendaGroup));
         }
 
         for(Map.Entry<String, Object> fact : facts.entrySet()) {
@@ -68,10 +70,10 @@ public class CatDroolsService {
             numOfRulesFired = kieSession.fireAllRules();
             logger.info("Total Rules Fired [{}]", numOfRulesFired);
         } catch (Exception e) {
-            logger.info("Unknown exception returned from Kie or Drools when executing fireAllRules() [{}]",
-                    e.getMessage(), e);
-            throw new CatException(
-                    "Unknown exception returned from Kie or Drools when executing fireAllRules()", e);
+            logger.info("Unknown exception returned from Kie or Drools when executing fireAllRules() [{}] [{}]",
+                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+            throw new CatException(String.format("Exception thrown [%s] with message [%s] when returned from Kie or Drools.",
+                    e.getClass().getSimpleName(), e.getMessage(), agendaGroup));
         } finally {
             kieSession.dispose();
         }
@@ -94,7 +96,9 @@ public class CatDroolsService {
                         logger.info("Loading [{}] File Name [{}] Resource [{}]", ext, file.getName(), resource);
                     });
         } catch (Exception e) {
-            throw new CatException("Unable to load files due to " + e.getMessage(), e);
+            logger.warn("Unable to load files due to " + e.getMessage(), e);
+            throw new CatException(String.format("Exception thrown [%s] with message [%s] when returned attempting to load files.",
+                    e.getClass().getSimpleName(), e.getMessage()));
         }
         logger.info("Processed [{}] [{}] Files", kr.size(), ext);
         return kr;

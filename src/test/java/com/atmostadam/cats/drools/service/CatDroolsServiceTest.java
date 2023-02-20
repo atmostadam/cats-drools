@@ -1,9 +1,10 @@
 package com.atmostadam.cats.drools.service;
 
-import com.atmostadam.cats.api.model.Microchip;
-import com.atmostadam.cats.drools.test.CatDroolsConfigurationTest;
-import com.atmostadam.cats.api.model.in.CatRequest;
-import com.atmostadam.cats.api.model.out.CatResponse;
+import com.atmostadam.cats.api.model.Cat;
+import com.atmostadam.cats.drools.configuration.CatDroolsTestConfiguration;
+import com.atmostadam.cats.framework.model.adoptapet.AdoptAPetRequest;
+import com.atmostadam.cats.framework.model.adoptapet.LimitedPetDetails;
+import com.atmostadam.cats.framework.model.adoptapet.LimitedPetImage;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,27 +13,28 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.atmostadam.cats.test.data.CatTestData.staticCatRequest;
-import static com.atmostadam.cats.test.data.CatTestData.staticCatResponse;
+import static com.atmostadam.cats.framework.data.CatTestValues.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@SpringJUnitConfig({CatDroolsConfigurationTest.class})
+@SpringJUnitConfig({CatDroolsTestConfiguration.class})
 class CatDroolsServiceTest {
     @Autowired
     CatDroolsService service;
 
     @Test
     void testFireAllRules() throws Exception {
-        CatRequest catRequest = staticCatRequest();
-        CatResponse catResponse = staticCatResponse();
-        Microchip microchip = new Microchip();
+        LimitedPetImage adoptAPetImage = new LimitedPetImage();
+        LimitedPetDetails adoptAPetDetails = new LimitedPetDetails();
+        AdoptAPetRequest adoptAPetRequest = new AdoptAPetRequest();
+
         Map<String, Object> facts = new HashMap<>();
-        facts.put("catRequest", catRequest);
-        facts.put("catResponse", catResponse);
-        facts.put("microchip", microchip);
-        service.fireAllRules("cat-request-rules", facts);
-        assertThat(facts.size(), Matchers.equalTo(3));
-        assertThat(catRequest.getCats().get(0).getMicrochip().getMicrochipNumber(), Matchers.equalTo(999999999999999L));
-        assertThat(microchip.getMicrochipNumber(), Matchers.equalTo(999999999999999L));
+        facts.put("adoptAPetImage", adoptAPetImage);
+        facts.put("adoptAPetDetails", adoptAPetDetails);
+        facts.put("adoptAPetRequest", adoptAPetRequest);
+        facts.put("cat", catTestData());
+
+        service.fireAllRules("adopt-a-pet-rules", facts);
+
+        assertThat(facts.size(), Matchers.equalTo(4));
     }
 }

@@ -17,16 +17,30 @@
 	</parent>
 
 	<properties>
+		<revision>0.0.42</revision>
 		<java.version>17</java.version>
-		<revision>0.0.10</revision>
-		<kie.version>7.73.0.Final</kie.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jacoco.version>0.8.8</jacoco.version>
+		<faker.version>1.0.2</faker.version>
+		<kie.version>7.73.0.Final</kie.version>
 	</properties>
+
+	<developers>
+		<developer>
+			<name>Adam Johnston</name>
+			<url>atmostadam.com</url>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.atmostadam.cats</groupId>
 			<artifactId>cats-api</artifactId>
+			<version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.atmostadam.cats</groupId>
+			<artifactId>cats-framework</artifactId>
 			<version>${revision}</version>
 		</dependency>
 		<dependency>
@@ -43,6 +57,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
@@ -52,9 +70,14 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.atmostadam.cats</groupId>
-			<artifactId>cats-test</artifactId>
-			<version>${revision}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>${faker.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -70,6 +93,10 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
@@ -83,10 +110,6 @@
 
 	<repositories>
 		<repository>
-			<id>central</id>
-			<url>https://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
 			<id>cats-api</id>
 			<url>https://maven.pkg.github.com/atmostadam/cats-api</url>
 			<releases>
@@ -97,8 +120,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>cats-test</id>
-			<url>https://maven.pkg.github.com/atmostadam/cats-test</url>
+			<id>cats-framework</id>
+			<url>https://maven.pkg.github.com/atmostadam/cats-framework</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -111,7 +134,7 @@
 	<distributionManagement>
 		<repository>
 			<id>cats-drools</id>
-			<name>cats-drools</name>
+			<name>GitHub Packages</name>
 			<url>https://maven.pkg.github.com/atmostadam/cats-drools</url>
 		</repository>
 	</distributionManagement>
